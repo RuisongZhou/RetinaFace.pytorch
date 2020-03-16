@@ -6,6 +6,7 @@ import torch.nn.functional as F
 from collections import OrderedDict
 from models.net import MobileNetV1 as MobileNetV1
 from models.mobilenetv3 import MobileNetV3_Small
+from models.ghostnet import ghost_net
 from models.net import FPN as FPN
 from models.net import SSH as SSH
 
@@ -122,13 +123,17 @@ class RetinaFace(nn.Module):
                     new_state_dict[name] = v
                 backbone.load_state_dict(new_state_dict)
             self.body = backbone
-            in_channels_stage2 = cfg['in_channel']
-            in_channels_list = [
-                in_channels_stage2 ,
-                in_channels_stage2 * 2,
-                in_channels_stage2 * 4,
-            ]
-            return in_channels_list
+        elif model_name == 'ghostnet':
+            backbone = ghost_net(width_mult=cfg['width_mult'])
+            self.body = backbone
+
+        in_channels_stage2 = cfg['in_channel']
+        in_channels_list = [
+            in_channels_stage2 ,
+            in_channels_stage2 * 2,
+            in_channels_stage2 * 4,
+        ]
+        return in_channels_list
 
 
     def forward(self,inputs):

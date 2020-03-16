@@ -5,33 +5,25 @@ A [PyTorch](https://pytorch.org/) implementation of [RetinaFace: Single-stage De
 ## Mobile or Edge device deploy
 We also provide a set of Face Detector for edge device in [here](https://github.com/biubug6/Face-Detector-1MB-with-landmark) from python training to C++ inference.
 
-## WiderFace Val Performance in single scale When using Resnet50 as backbone net.
-| Style | easy | medium | hard |
-|:-|:-:|:-:|:-:|
-| Pytorch (same parameter with Mxnet) | 94.82 % | 93.84% | 89.60% |
-| Pytorch (original image scale) | 95.48% | 94.04% | 84.43% |
-| Mxnet | 94.86% | 93.87% | 88.33% |
-| Mxnet(original image scale) | 94.97% | 93.89% | 82.27% |
 
+## WiderFace Val Performance in single scale When testing scale is oringinal scale
 
-## WiderFace Val Performance in single scale When using Mobilenet0.25 as backbone net.
+| Style | easy | medium | hard | pretrained | batch_size| train_size |
+|:-|:-:|:-:|:-:|:-:|:-:|:-:|
+| ResNet50 | 95.48% | 94.04% | 84.43% |true |24| 840| 
+| Mobilenet0.25 (original image scale) | 90.70% | 88.16% | 73.82% | true | 32 | 640 |
+| Mobilenet0.25(替换了fpn为dw)original | 90.5% | 87.5% | 72.1% |   true | 32 |640 |
+| Mobilenet0.25(替换了fpn为dw,替换ssh为dw) original| 89.7% | 86.7% | 69.9% | true | 32 |640 |
+| Mobilenet0.25(替换了fpn为dw,替换ssh为dw, outchannel=32) original| 89.6% | 85.8% | 67.8% | true | 32 |640 |
+| MobileNetV3 1.0 | 90.95% | 88.11% | 69.85% | true | 48 |640 |
 
-| Style | easy | medium | hard |
-|:-|:-:|:-:|:-:|
-| Mxnet | 88.72% | 86.97% | 79.19% |
-| Mxnet(original image scale) | 89.58% | 87.11% | 69.12% |
-| Pytorch (same parameter with Mxnet) | 88.67% | 87.09% | 80.99% |
-| Pytorch (original image scale) | 90.70% | 88.16% | 73.82% |
-| Pytorch(替换了fpn为dw) | 90.5% | 87.5% | 72.1% |  
-| Pytorch(替换了fpn为dw,替换ssh为dw) | 89.7% | 86.7% | 69.9% |
-| Pytorch(替换了fpn为dw,替换ssh为dw, outchannel=32) | 89.6% | 85.8% | 67.8% |
+## WiderFace Val Performance in single scale When testing scale is 640*480 (保持长宽比)
+**替换了fpn为dw,替换ssh为dw, outchannel=32**
+| Style | easy | medium | hard | pretrained | batch_size|train_size |
+|:-|:-:|:-:|:-:|:-:|:-:|:-:|
+| MobileNetv3 1.0 | 88.25% | 81.38% | 49.48% | true | 48 |640 |
 
-
-## WiderFace Val Performance in single scale When using Mobilenetv3 as backbone net
-| Style | easy | medium | hard |
-|:-|:-:|:-:|:-:|
-| 1.0(640) | 88.25% | 81.38% | 49.48% |
- 1.0(original) | 90.95% | 88.11% | 69.85% |
+ 
 
 <p align="center"><img src="curve/Widerface.jpg" width="640"\></p>
 

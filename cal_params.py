@@ -8,7 +8,7 @@ import os
 import torch
 import argparse
 import torch.utils.data as data
-from data import cfg_mnet, cfg_re50, cfg_mnetv3
+from data import cfg_mnet, cfg_re50, cfg_mnetv3, cfg_ghostnet
 from models.retinaface import RetinaFace
 
 parser = argparse.ArgumentParser(description='Retinaface Training')
@@ -34,6 +34,8 @@ elif args.network == "resnet50":
     cfg = cfg_re50
 elif args.network == "MobileNetV3":
     cfg = cfg_mnetv3
+elif args.network == "GhostNet":
+    cfg = cfg_ghostnet
 
 rgb_mean = (104, 117, 123) # bgr order
 num_classes = 2

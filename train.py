@@ -5,7 +5,8 @@ import torch.optim as optim
 import torch.backends.cudnn as cudnn
 import argparse
 import torch.utils.data as data
-from data import WiderFaceDetection, detection_collate, preproc, cfg_mnet, cfg_re50, testDataset, testpreproc, cfg_mnetv3
+from data import WiderFaceDetection, detection_collate, preproc, cfg_mnet, cfg_re50, testDataset, testpreproc, \
+    cfg_mnetv3, cfg_ghostnet
 from layers.modules import MultiBoxLoss
 from layers.functions.prior_box import PriorBox
 import time
@@ -37,8 +38,10 @@ elif args.network == "resnet50":
     cfg = cfg_re50
 elif args.network == "MobileNetV3":
     cfg = cfg_mnetv3
+elif args.network == "GhostNet":
+    cfg = cfg_ghostnet
 
-rgb_mean = (104, 117, 123) # bgr order
+rgb_mean = (104, 117, 123)  # bgr order
 num_classes = 2
 img_dim = cfg['image_size']
 num_gpu = cfg['ngpu']
@@ -58,17 +61,17 @@ save_folder = args.save_folder
 net = RetinaFace(cfg=cfg)
 print("Printing net...")
 
-
 if args.resume_net is not None:
     print('Loading resume network...')
     state_dict = torch.load(args.resume_net)
     # create new OrderedDict that does not contain `module.`
     from collections import OrderedDict
+
     new_state_dict = OrderedDict()
     for k, v in state_dict.items():
         head = k[:7]
         if head == 'module.':
-            name = k[7:] # remove `module.`
+            name = k[7:]  # remove `module.`
         else:
             name = k
         new_state_dict[name] = v
@@ -81,7 +84,6 @@ else:
 
 cudnn.benchmark = True
 
-
 optimizer = optim.SGD(net.parameters(), lr=initial_lr, momentum=momentum, weight_decay=weight_decay)
 criterion = MultiBoxLoss(num_classes, 0.35, True, 0, True, 7, 0.35, False)
 
@@ -89,6 +91,7 @@ priorbox = PriorBox(cfg, image_size=(img_dim, img_dim))
 with torch.no_grad():
     priors = priorbox.forward()
     priors = priors.cuda()
+
 
 def test(testdata):
     net.eval()
@@ -108,7 +111,7 @@ def test(testdata):
         loss_sum += loss_c.item() + loss_l.item()
         if i % 100 == 0:
             print("Processing images {}".format(i))
-    return loss_sum/len(testdata)
+    return loss_sum / len(testdata)
 
 
 def train():
@@ -116,7 +119,7 @@ def train():
     epoch = 0 + args.resume_epoch
     print('Loading Dataset...')
 
-    dataset = WiderFaceDetection( training_dataset,preproc(img_dim, rgb_mean))
+    dataset = WiderFaceDetection(training_dataset, preproc(img_dim, rgb_mean))
     testset = testDataset(test_dataset, testpreproc(img_dim, rgb_mean))
 
     epoch_size = math.ceil(len(dataset) / batch_size)
@@ -133,14 +136,14 @@ def train():
     for iteration in range(start_iter, max_iter):
         if iteration % epoch_size == 0:
             # create batch iterator
-            batch_iterator = iter(data.DataLoader(dataset, batch_size, shuffle=True, num_workers=num_workers, collate_fn=detection_collate, pin_memory=True))
+            batch_iterator = iter(data.DataLoader(dataset, batch_size, shuffle=True, num_workers=num_workers,
+                                                  collate_fn=detection_collate, pin_memory=True))
             if (epoch % 10 == 0 and epoch > 0) or (epoch % 5 == 0 and epoch > cfg['decay1']):
-                #loss = test(testset)
-                #net.train()
-                torch.save(net.state_dict(), save_folder + cfg['save_name']+ '_epoch_' + str(epoch) + '.pth')
-                #print('Epoch:{}/{} || loss: {}'.format(epoch, max_epoch, loss))
+                # loss = test(testset)
+                # net.train()
+                torch.save(net.state_dict(), save_folder + cfg['save_name'] + '_epoch_' + str(epoch) + '.pth')
+                # print('Epoch:{}/{} || loss: {}'.format(epoch, max_epoch, loss))
             epoch += 1
-
 
         load_t0 = time.time()
         if iteration in stepvalues:
@@ -164,9 +167,11 @@ def train():
         load_t1 = time.time()
         batch_time = load_t1 - load_t0
         eta = int(batch_time * (max_iter - iteration))
-        print('Epoch:{}/{} || Epochiter: {}/{} || Iter: {}/{} || Loc: {:.4f} Cla: {:.4f} Landm: {:.4f} || LR: {:.8f} || Batchtime: {:.4f} s || ETA: {}'
-              .format(epoch, max_epoch, (iteration % epoch_size) + 1,
-              epoch_size, iteration + 1, max_iter, loss_l.item(), loss_c.item(), loss_landm.item(), lr, batch_time, str(datetime.timedelta(seconds=eta))))
+        print(
+            'Epoch:{}/{} || Epochiter: {}/{} || Iter: {}/{} || Loc: {:.4f} Cla: {:.4f} Landm: {:.4f} || LR: {:.8f} || Batchtime: {:.4f} s || ETA: {}'
+            .format(epoch, max_epoch, (iteration % epoch_size) + 1,
+                    epoch_size, iteration + 1, max_iter, loss_l.item(), loss_c.item(), loss_landm.item(), lr,
+                    batch_time, str(datetime.timedelta(seconds=eta))))
 
     torch.save(net.state_dict(), save_folder + cfg['save_name'] + '_Final.pth')
     # torch.save(net.state_dict(), save_folder + 'Final_Retinaface.pth')
@@ -179,12 +184,13 @@ def adjust_learning_rate(optimizer, gamma, epoch, step_index, iteration, epoch_s
     """
     warmup_epoch = -1
     if epoch <= warmup_epoch:
-        lr = 1e-6 + (initial_lr-1e-6) * iteration / (epoch_size * warmup_epoch)
+        lr = 1e-6 + (initial_lr - 1e-6) * iteration / (epoch_size * warmup_epoch)
     else:
         lr = initial_lr * (gamma ** (step_index))
     for param_group in optimizer.param_groups:
         param_group['lr'] = lr
     return lr
+
 
 if __name__ == '__main__':
     train()
