@@ -15,15 +15,23 @@ We also provide a set of Face Detector for edge device in [here](https://github.
 
 
 ## WiderFace Val Performance in single scale When using Mobilenet0.25 as backbone net.
+
 | Style | easy | medium | hard |
 |:-|:-:|:-:|:-:|
-| Pytorch (same parameter with Mxnet) | 88.67% | 87.09% | 80.99% |
-| Pytorch (original image scale) | 90.70% | 88.16% | 73.82% |
 | Mxnet | 88.72% | 86.97% | 79.19% |
 | Mxnet(original image scale) | 89.58% | 87.11% | 69.12% |
-| Pytorch(替换了fpn为dw) | 90.5% | 87.5% | 72.1% |
+| Pytorch (same parameter with Mxnet) | 88.67% | 87.09% | 80.99% |
+| Pytorch (original image scale) | 90.70% | 88.16% | 73.82% |
+| Pytorch(替换了fpn为dw) | 90.5% | 87.5% | 72.1% |  
 | Pytorch(替换了fpn为dw,替换ssh为dw) | 89.7% | 86.7% | 69.9% |
 | Pytorch(替换了fpn为dw,替换ssh为dw, outchannel=32) | 89.6% | 85.8% | 67.8% |
+
+
+## WiderFace Val Performance in single scale When using Mobilenetv3 as backbone net
+| Style | easy | medium | hard |
+|:-|:-:|:-:|:-:|
+| 1.0(640) | 88.25% | 81.38% | 49.48% |
+ 1.0(original) | 90.95% | 88.11% | 69.85% |
 
 <p align="center"><img src="curve/Widerface.jpg" width="640"\></p>
 
