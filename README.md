@@ -16,22 +16,24 @@ We also provide a set of Face Detector for edge device in [here](https://github.
 | Mobilenet0.25(替换了fpn为dw,替换ssh为dw) original| 89.7% | 86.7% | 69.9% | true | 32 |640 |
 | Mobilenet0.25(替换了fpn为dw,替换ssh为dw, outchannel=32) original| 89.6% | 85.8% | 67.8% | true | 32 |640 |
 | MobileNetV3 1.0 | 90.95% | 88.11% | 69.85% | true | 48 |640 |
-
+ | GhostNet 1.0 | 87.79% | 84.05% | 66.77% | False | 48 |640 |
 ## WiderFace Val Performance in single scale When testing scale is 640*480 (保持长宽比)
 **替换了fpn为dw,替换ssh为dw, outchannel=32**
 | Style | easy | medium | hard | pretrained | batch_size|train_size |
 |:-|:-:|:-:|:-:|:-:|:-:|:-:|
 | MobileNetv3 1.0 | 88.25% | 81.38% | 49.48% | true | 48 |640 |
-
+| GhostNet 1.0 | 84.98% | 77.62% | 47.24% | False | 48 |640 |
  
 
 <p align="center"><img src="curve/Widerface.jpg" width="640"\></p>
 
 ## FDDB Performance.
-| FDDB(pytorch) | performance |
+| FDDB(pytorch) | performance | img_size|
 |:-|:-:|
-| Mobilenet0.25 | 98.64% |
-| Resnet50 | 99.22% |
+| Mobilenet0.25 | 98.64% | origin|
+| Resnet50 | 99.22% | origin |
+|GhostNet | 79.7% | 128|
+
 <p align="center"><img src="curve/FDDB.png" width="640"\></p>
 
 ### Contents

@@ -56,7 +56,7 @@ cfg_mnetv3 = {
     'decay1': 190,
     'decay2': 220,
     'image_size': 640,
-    'pretrain': True,
+    'pretrain': False,
     'in_channel': 24,
     'out_channel': 32
 }

@@ -122,6 +122,7 @@ class RetinaFace(nn.Module):
                     name = k[7:]  # remove module.
                     new_state_dict[name] = v
                 backbone.load_state_dict(new_state_dict)
+                print("Loaded pretrained model!")
             self.body = backbone
         elif model_name == 'ghostnet':
             backbone = ghost_net(width_mult=cfg['width_mult'])

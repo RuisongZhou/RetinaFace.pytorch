@@ -4,14 +4,14 @@ import argparse
 import torch
 import torch.backends.cudnn as cudnn
 import numpy as np
-from data import cfg_mnet, cfg_re50, cfg_mnetv3
+from data import cfg_mnet, cfg_re50, cfg_mnetv3,cfg_ghostnet
 from layers.functions.prior_box import PriorBox
 from utils.nms.py_cpu_nms import py_cpu_nms
 import cv2
 from models.retinaface import RetinaFace
 from utils.box_utils import decode, decode_landm
 from utils.timer import Timer
-
+from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description='Retinaface')
 parser.add_argument('-m', '--trained_model', default='./weights/Resnet50_Final.pth',
@@ -76,6 +76,8 @@ if __name__ == '__main__':
         cfg = cfg_re50
     elif args.network == "MobileNetV3":
         cfg = cfg_mnetv3
+    elif args.network == "GhostNet":
+        cfg = cfg_ghostnet
     # net and model
     net = RetinaFace(cfg=cfg, phase = 'test')
     net = load_model(net, args.trained_model, args.cpu)
@@ -95,7 +97,8 @@ if __name__ == '__main__':
     num_images = len(test_dataset)
 
     _t = {'forward_pass': Timer(), 'misc': Timer()}
-
+    pbar = tqdm(range(num_images))
+    pbar.set_description('Predicting ... ')
     # testing begin
     for i, img_name in enumerate(test_dataset):
         image_path = testset_folder + img_name
@@ -191,8 +194,8 @@ if __name__ == '__main__':
                 confidence = str(box[4])
                 line = str(x) + " " + str(y) + " " + str(w) + " " + str(h) + " " + confidence + " \n"
                 fd.write(line)
-
-        print('im_detect: {:d}/{:d} forward_pass_time: {:.4f}s misc: {:.4f}s'.format(i + 1, num_images, _t['forward_pass'].average_time, _t['misc'].average_time))
+        pbar.update()
+        #print('im_detect: {:d}/{:d} forward_pass_time: {:.4f}s misc: {:.4f}s'.format(i + 1, num_images, _t['forward_pass'].average_time, _t['misc'].average_time))
 
         # save image
         if args.save_image:
