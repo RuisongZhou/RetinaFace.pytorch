@@ -12,16 +12,19 @@ We also provide a set of Face Detector for edge device in [here](https://github.
 |:-|:-:|:-:|:-:|:-:|:-:|:-:|
 | ResNet50 | 95.48% | 94.04% | 84.43% |true |24| 840| 
 | Mobilenet0.25 (original image scale) | 90.70% | 88.16% | 73.82% | true | 32 | 640 |
-| Mobilenet0.25(替换了fpn为dw)original | 90.5% | 87.5% | 72.1% |   true | 32 |640 |
-| Mobilenet0.25(替换了fpn为dw,替换ssh为dw) original| 89.7% | 86.7% | 69.9% | true | 32 |640 |
-| Mobilenet0.25(替换了fpn为dw,替换ssh为dw, outchannel=32) original| 89.6% | 85.8% | 67.8% | true | 32 |640 |
+| Mobilenet0.25(替换了fpn为dw) | 90.5% | 87.5% | 72.1% |   true | 32 |640 |
+| Mobilenet0.25(替换了fpn为dw,替换ssh为dw) | 89.7% | 86.7% | 69.9% | true | 32 |640 |
+| Mobilenet0.25(替换了fpn为dw,替换ssh为dw, outchannel=32)| 89.6% | 85.8% | 67.8% | true | 32 |640 |
 | MobileNetV3 1.0 | 90.95% | 88.11% | 69.85% | true | 48 |640 |
+| MobileNetV3 1.0 | 84.24% | 81.98% | 61.44% | False | 48 |640 |
  | GhostNet 1.0 | 87.79% | 84.05% | 66.77% | False | 48 |640 |
-## WiderFace Val Performance in single scale When testing scale is 640*480 (保持长宽比)
+## WiderFace Val Performance in single scale When testing scale is 640*480 (长边不大于640，保持长宽比)
 **替换了fpn为dw,替换ssh为dw, outchannel=32**
-| Style | easy | medium | hard | pretrained | batch_size|train_size |
+| Style | easy | medium | hard | pretrained | batch_size |train_size |
 |:-|:-:|:-:|:-:|:-:|:-:|:-:|
+| Mobilenet0.25| 86.6% | 78.9% | 48.0% | true | 32 |640|
 | MobileNetv3 1.0 | 88.25% | 81.38% | 49.48% | true | 48 |640 |
+| MobileNetv3 1.0 | 84.27% | 75.80% | 43.32% | False | 48 |640 |
 | GhostNet 1.0 | 84.98% | 77.62% | 47.24% | False | 48 |640 |
  
 
@@ -32,6 +35,7 @@ We also provide a set of Face Detector for edge device in [here](https://github.
 |:-|:-:|
 | Mobilenet0.25 | 98.64% | origin|
 | Resnet50 | 99.22% | origin |
+| MobileNetV3 1.0(no pretrained) | 75.36% | 128 |
 |GhostNet | 79.7% | 128|
 
 <p align="center"><img src="curve/FDDB.png" width="640"\></p>

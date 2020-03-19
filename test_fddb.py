@@ -100,7 +100,6 @@ if __name__ == '__main__':
     num_images = len(test_dataset)
 
     # testing scale
-    resize = 0.5
     pbar = tqdm(range(num_images))
     pbar.set_description('Predicting ... ')
     # testing begin
@@ -116,8 +115,9 @@ if __name__ == '__main__':
             img = np.float32(img_raw)
             im_size_max = np.max(img.shape[0:2])
             resize = args.img_size / float(im_size_max)
+            resize = min(1.0, resize)
             if resize != 1:
-                img = cv2.resize(img, None, None, fx=resize, fy=resize, interpolation=cv2.INTER_LINEAR)
+                img = cv2.resize(img,None, fx=resize, fy=resize, interpolation=cv2.INTER_LINEAR)
             im_height, im_width, _ = img.shape
             scale = torch.Tensor([img.shape[1], img.shape[0], img.shape[1], img.shape[0]])
             img -= (104, 117, 123)

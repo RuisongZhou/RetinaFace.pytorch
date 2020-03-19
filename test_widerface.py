@@ -83,7 +83,6 @@ if __name__ == '__main__':
     net = load_model(net, args.trained_model, args.cpu)
     net.eval()
     print('Finished loading model!')
-    print(net)
     cudnn.benchmark = True
     device = torch.device("cpu" if args.cpu else "cuda")
     net = net.to(device)

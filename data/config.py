@@ -70,14 +70,14 @@ cfg_ghostnet = {
     'clip': False,
     'loc_weight': 2.0,
     'gpu_train': True,
-    'batch_size': 24,
+    'batch_size': 64,
     'ngpu': 1,
     'epoch': 250,
     'decay1': 190,
     'decay2': 220,
     'image_size': 640,
     'pretrain': False,
-    'in_channel': 24,
+    'in_channel': int(24*0.5),
     'out_channel': 32,
-    'width_mult': 1.0
+    'width_mult': 0.5
 }
