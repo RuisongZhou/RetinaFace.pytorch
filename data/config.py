@@ -64,7 +64,7 @@ cfg_mnetv3 = {
 cfg_ghostnet = {
     'name': 'ghostnet',
     'save_name': 'ghostnet',
-    'min_sizes': [[16, 32], [64, 128], [256, 512]],
+    'min_sizes': [[10, 20], [32, 64], [128, 256]],   # [[16, 32], [64, 128], [256, 512]]
     'steps': [8, 16, 32],
     'variance': [0.1, 0.2],
     'clip': False,
@@ -72,12 +72,12 @@ cfg_ghostnet = {
     'gpu_train': True,
     'batch_size': 64,
     'ngpu': 1,
-    'epoch': 250,
-    'decay1': 190,
-    'decay2': 220,
-    'image_size': 640,
+    'epoch': 200,
+    'decay1': 150,
+    'decay2': 175,
+    'image_size': 320,
     'pretrain': False,
-    'in_channel': int(24*0.5),
+    'in_channel': 24,
     'out_channel': 32,
-    'width_mult': 0.5
+    'width_mult': 1.0
 }

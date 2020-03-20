@@ -9,7 +9,7 @@ from models.mobilenetv3 import MobileNetV3_Small
 from models.ghostnet import ghost_net
 from models.net import FPN as FPN
 from models.net import SSH as SSH
-
+from models.net import BasicRFB as RFB
 
 
 class ClassHead(nn.Module):

@@ -17,7 +17,8 @@ We also provide a set of Face Detector for edge device in [here](https://github.
 | Mobilenet0.25(替换了fpn为dw,替换ssh为dw, outchannel=32)| 89.6% | 85.8% | 67.8% | true | 32 |640 |
 | MobileNetV3 1.0 | 90.95% | 88.11% | 69.85% | true | 48 |640 |
 | MobileNetV3 1.0 | 84.24% | 81.98% | 61.44% | False | 48 |640 |
- | GhostNet 1.0 | 87.79% | 84.05% | 66.77% | False | 48 |640 |
+| GhostNet 1.0 | 87.79% | 84.05% | 66.77% | False | 48 |640 |
+| GhostNet 0.5 | 79.88% | 75.67% | 52.90% | False | 48 |640 |
 ## WiderFace Val Performance in single scale When testing scale is 640*480 (长边不大于640，保持长宽比)
 **替换了fpn为dw,替换ssh为dw, outchannel=32**
 | Style | easy | medium | hard | pretrained | batch_size |train_size |
@@ -26,18 +27,20 @@ We also provide a set of Face Detector for edge device in [here](https://github.
 | MobileNetv3 1.0 | 88.25% | 81.38% | 49.48% | true | 48 |640 |
 | MobileNetv3 1.0 | 84.27% | 75.80% | 43.32% | False | 48 |640 |
 | GhostNet 1.0 | 84.98% | 77.62% | 47.24% | False | 48 |640 |
- 
+| GhostNet 0.5 | 76.29% | 66.38% | 35.02% | False | 48 |640 |
 
 <p align="center"><img src="curve/Widerface.jpg" width="640"\></p>
 
 ## FDDB Performance.
-| FDDB(pytorch) | performance | img_size|
-|:-|:-:|
-| Mobilenet0.25 | 98.64% | origin|
-| Resnet50 | 99.22% | origin |
-| MobileNetV3 1.0(no pretrained) | 75.36% | 128 |
-|GhostNet | 79.7% | 128|
-
+| FDDB(pytorch) | performance | img_size| train_size | FLOPS｜
+|:-|:-:|:-:|:-:|
+| Mobilenet0.25 | 98.64% | origin| 640 | - |
+| Resnet50 | 99.22% | origin |640 | - |
+| MobileNetV3 1.0(no pretrained) | 75.36% | 128 |640 | 14.844M|
+|GhostNet 1.0| 79.7% | 128 |640 | 10.296M|
+|GhostNet 0.5| 70.3% | 128 |640 | 4.139M|
+|GhostNet 0.5| 76.36% | 128 |320 | [[8, 16], [32, 64], [128, 256]]| 4.139M|
+|GhostNet 0.5| 79.26% | 128 |320 [[10,20], [32, 64], [128, 256]] ,SSH为RFB| 4.99M|
 <p align="center"><img src="curve/FDDB.png" width="640"\></p>
 
 ### Contents

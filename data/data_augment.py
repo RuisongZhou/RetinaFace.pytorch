@@ -15,7 +15,7 @@ def _crop(image, boxes, labels, landm, img_dim):
         else:
             scale = random.uniform(0.3, 1.0)
         """
-        PRE_SCALES = [0.3, 0.45, 0.6, 0.8, 1.0]
+        PRE_SCALES = [0.3, 0.45, 0.6,]
         scale = random.choice(PRE_SCALES)
         short_side = min(width, height)
         w = int(scale * short_side)
