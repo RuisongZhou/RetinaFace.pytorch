@@ -33,7 +33,7 @@ We also provide a set of Face Detector for edge device in [here](https://github.
 
 ## FDDB Performance.
 | FDDB(pytorch) | performance | img_size| train_size | FLOPS｜
-|:-|:-:|:-:|:-:|
+|:-|:-:|:-:|:-:|:-:|
 | Mobilenet0.25 | 98.64% | origin| 640 | - |
 | Resnet50 | 99.22% | origin |640 | - |
 | MobileNetV3 1.0(no pretrained) | 75.36% | 128 |640 | 14.844M|
