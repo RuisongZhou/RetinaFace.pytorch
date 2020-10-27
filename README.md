@@ -39,7 +39,7 @@ We also provide a set of Face Detector for edge device in [here](https://github.
 | MobileNetV3 1.0(no pretrained) | 75.36% | 128 |640 | 14.844M|
 |GhostNet 1.0| 79.7% | 128 |640 | 10.296M|
 |GhostNet 0.5| 70.3% | 128 |640 | 4.139M|
-|GhostNet 0.5| 79.26% | 128 |320 [[10,20], [32, 64], [128, 256]] ,SSH为RFB| 4.99M|
+|GhostNet 0.5| 79.26% | 128 |320| 4.99M|
 <p align="center"><img src="curve/FDDB.png" width="640"\></p>
 
 ### Contents
